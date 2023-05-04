@@ -1,15 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {Form, Alert , Button, Col, Row, Image, Container} from "react-bootstrap";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
-import { SetCurrentUserContext } from "../../App";
+import { useSetCurrentUser } from "../../contexts/currentUserContexts";
 
 const SignInForm = () => {
     // User Context
-    const setCurrentUser = useContext(SetCurrentUserContext)
+    const setCurrentUser = useSetCurrentUser();
 
     //  Component states
     const [signInData, setSignInData] = useState({
