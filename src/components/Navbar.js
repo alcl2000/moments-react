@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import logo from '../assets/logo.png';
 import styles from '../styles/NavBar.module.css';
@@ -9,6 +9,20 @@ import axios from 'axios';
 
 
 const NavBar = () => {
+    // NavBar toggle
+    const [expanded, setExpanded] = useState(false);
+    const ref = useRef(null)
+    useEffect(() => {
+        const handleClickOutside = (event) =>{
+            if(ref.current && !ref.current.contains(event.target)){
+                setExpanded(false)
+            }
+        }
+        document.addEventListener('mouseup', handleClickOutside)
+        return () => {
+            document.removeEventListener('mouseup', handleClickOutside)
+        }
+    }, [ref]);
     // user context
     const currentUser = useCurrentUser();
     const setCurrentUser = useSetCurrentUser();
@@ -80,7 +94,7 @@ const NavBar = () => {
                         </>
     // rendered
     return (
-        <Navbar className={styles.NavBar} expand='md' fixed='top'>
+        <Navbar expanded={expanded} className={styles.NavBar} expand='md' fixed='top'>
             <Container>
                 <NavLink to="/">
                     <Navbar.Brand>
@@ -88,7 +102,11 @@ const NavBar = () => {
                     </Navbar.Brand>
                 </NavLink>
                 {currentUser && addPostIcon}
-                <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                <Navbar.Toggle 
+                    aria-controls='basic-navbar-nav' 
+                    onClick={() => setExpanded(!expanded)} 
+                    ref={ref}
+                />
                 <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className="ml-auto text-left">
                         <NavLink exact className={styles.NavLink} activeClassName={styles.Active} to='/'>
