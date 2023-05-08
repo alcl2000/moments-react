@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import {Form, Button, Row, Col, Container} from "react-bootstrap";
-import Upload from "../../assets/upload.png";
-import styles from "../../styles/PostCreateEditForm.module.css";
+import {Form, Button, Row, Col, Container, FormLabel} from "react-bootstrap";
+import upload from "../../assets/upload.png";
+import styles from "../../styles/PostCreateEditForm.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
+import Asset from "../../components/Asset";
 
 function PostCreateForm() {
 
@@ -12,9 +13,25 @@ function PostCreateForm() {
 
   const textFields = (
     <div className="text-center">
-      {/* Add your form fields here */}
-
-    
+        <Form.Group  controlId="title">
+            <FormLabel>
+                Title
+            </FormLabel>
+            <Form.Control
+                type="text"
+                name="title"
+            />
+        </Form.Group>
+        <Form.Group  controlId="content">
+            <FormLabel>
+                Content
+            </FormLabel>
+            <Form.Control
+                as="textarea"
+                rows={6}
+                name="content"
+            />
+        </Form.Group>
     
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
@@ -41,7 +58,7 @@ function PostCreateForm() {
                   className="d-flex justify-content-center"
                   htmlFor="image-upload"
                 >
-                  ASSET
+                <Asset src={upload} message="Click or Tap to upload an image"/>
                 </Form.Label>
 
             </Form.Group>
